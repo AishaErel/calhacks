@@ -1,16 +1,16 @@
-import { serviceOptions } from '@/constants/Constants.js';
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { serviceOptions } from "@/constants/Constants.js";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowLeft, Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowLeft, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 /* ---------- Types ---------- */
 interface PreferencesSetupProps {
@@ -43,27 +43,28 @@ const PreferencesSetup = ({ onComplete, onBack }: PreferencesSetupProps) => {
     specialRequirements: string[];
     notificationPreference: string;
   }>({
-    zipCode: '',
+    zipCode: "",
     serviceTypes: [],
-    languagePreference: 'english',
+    languagePreference: "english",
     accessibilityNeeds: [],
-    familySize: 'individual',
+    familySize: "individual",
     specialRequirements: [],
-    notificationPreference: 'none',
+    notificationPreference: "none",
   });
 
   /* Toggle a service chip */
   const handleServiceToggle = (serviceId: string) =>
-    setPreferences(prev => ({
+    setPreferences((prev) => ({
       ...prev,
       serviceTypes: prev.serviceTypes.includes(serviceId)
-        ? prev.serviceTypes.filter(id => id !== serviceId)
+        ? prev.serviceTypes.filter((id) => id !== serviceId)
         : [...prev.serviceTypes, serviceId],
     }));
 
   // Check if we can proceed (need zip and at least one service)
-  const canProceed = preferences.zipCode.trim().length === 5 &&
-                     preferences.serviceTypes.length > 0;
+  const canProceed =
+    preferences.zipCode.trim().length === 5 &&
+    preferences.serviceTypes.length > 0;
 
   const handleComplete = () => {
     if (canProceed) {
@@ -82,15 +83,14 @@ const PreferencesSetup = ({ onComplete, onBack }: PreferencesSetupProps) => {
   /* ---------- Render ---------- */
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 p-4">
-
       <div>
-        <h1>{ preferences.zipCode }</h1>
-        <h1>{ preferences.serviceTypes[0] }</h1>
-        <h1>{ preferences.serviceTypes[1] }</h1>
-        <h1>{ preferences.serviceTypes[2] }</h1>
-        <h1>{ preferences.serviceTypes[3] }</h1>
-        <h1>{ preferences.serviceTypes[4] }</h1>
-        <h1>{ preferences.serviceTypes[5] }</h1>
+        <h1>{preferences.zipCode}</h1>
+        <h1>{preferences.serviceTypes[0]}</h1>
+        <h1>{preferences.serviceTypes[1]}</h1>
+        <h1>{preferences.serviceTypes[2]}</h1>
+        <h1>{preferences.serviceTypes[3]}</h1>
+        <h1>{preferences.serviceTypes[4]}</h1>
+        <h1>{preferences.serviceTypes[5]}</h1>
       </div>
 
       <div className="max-w-2xl mx-auto">
@@ -108,9 +108,12 @@ const PreferencesSetup = ({ onComplete, onBack }: PreferencesSetupProps) => {
             <div className="mx-auto mb-4 p-3 bg-blue-100 rounded-full w-fit">
               <Search className="h-8 w-8 text-blue-600" />
             </div>
-            <CardTitle className="text-xl">Choose services & enter ZIP code</CardTitle>
+            <CardTitle className="text-xl">
+              Choose services & enter ZIP code
+            </CardTitle>
             <CardDescription>
-              Select services you need and enter your ZIP code to find nearby resources.
+              Select services you need and enter your ZIP code to find nearby
+              resources.
             </CardDescription>
           </CardHeader>
 
@@ -118,15 +121,23 @@ const PreferencesSetup = ({ onComplete, onBack }: PreferencesSetupProps) => {
             {/* ZIP Code Input */}
             <div className="p-4 border-2 border-dashed border-blue-200 rounded-lg bg-blue-50">
               <div className="text-center space-y-3">
-                <h3 className="font-semibold text-blue-900">ZIP Code Required</h3>
+                <h3 className="font-semibold text-blue-900">
+                  ZIP Code Required
+                </h3>
                 <p className="text-sm text-blue-700">
-                  Enter your ZIP code so we can find the closest resources and services in your area.
+                  Please enter a ZIP code in San Francisco so we can find the
+                  closest resources and services in your area.
                 </p>
                 <Input
                   type="text"
                   maxLength={5}
                   value={preferences.zipCode}
-                  onChange={e => setPreferences(prev => ({ ...prev, zipCode: e.target.value }))}
+                  onChange={(e) =>
+                    setPreferences((prev) => ({
+                      ...prev,
+                      zipCode: e.target.value,
+                    }))
+                  }
                   placeholder="Enter ZIP code"
                   className="max-w-xs mx-auto text-center"
                 />
@@ -137,20 +148,22 @@ const PreferencesSetup = ({ onComplete, onBack }: PreferencesSetupProps) => {
             <div>
               <h3 className="font-semibold mb-3">What services do you need?</h3>
               <div className="grid sm:grid-cols-2 gap-4">
-                {serviceOptions.map(service => (
+                {serviceOptions.map((service) => (
                   <Card
                     key={service.id}
                     className={`cursor-pointer transition-all hover:shadow-md ${
                       preferences.serviceTypes.includes(service.id)
-                        ? 'ring-2 ring-blue-500 bg-blue-50'
-                        : 'hover:bg-gray-50'
+                        ? "ring-2 ring-blue-500 bg-blue-50"
+                        : "hover:bg-gray-50"
                     }`}
                     onClick={() => handleServiceToggle(service.id)}
                   >
                     <CardContent className="p-4 flex items-start space-x-3">
                       <div className="text-2xl">{service.icon}</div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-sm">{service.label}</h3>
+                        <h3 className="font-semibold text-sm">
+                          {service.label}
+                        </h3>
                         <p className="text-xs text-gray-600 mt-1">
                           {service.description}
                         </p>
@@ -181,7 +194,8 @@ const PreferencesSetup = ({ onComplete, onBack }: PreferencesSetupProps) => {
 
         {!canProceed && (
           <p className="text-center text-sm text-gray-500 mt-3">
-            Please enter your ZIP code and select at least one service to continue
+            Please enter your ZIP code and select at least one service to
+            continue
           </p>
         )}
       </div>
